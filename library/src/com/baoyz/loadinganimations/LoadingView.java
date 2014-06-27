@@ -12,6 +12,11 @@ import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ObjectAnimator;
 
+/**
+ * 
+ * @author baoyz
+ * @date 2014-6-28
+ */
 public class LoadingView extends View {
 
 	private static final float MAX_ALPHA = 255;

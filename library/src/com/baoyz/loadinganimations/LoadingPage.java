@@ -6,14 +6,18 @@ import android.graphics.Color;
 import android.graphics.Paint;
 import android.util.AttributeSet;
 import android.util.Log;
-import android.view.Gravity;
-import android.widget.FrameLayout;
+import android.view.View;
 
 import com.nineoldandroids.animation.Animator;
 import com.nineoldandroids.animation.AnimatorListenerAdapter;
 import com.nineoldandroids.animation.ObjectAnimator;
 
-public class LoadingPage extends FrameLayout {
+/**
+ * 
+ * @author baoyz
+ * @date 2014-6-28
+ */
+public class LoadingPage extends View {
 
 	private static int MAX = 30;
 	private Paint mPaint;
@@ -42,15 +46,9 @@ public class LoadingPage extends FrameLayout {
 	private void init(Context context, AttributeSet attrs) {
 
 		mPaint = new Paint(Paint.ANTI_ALIAS_FLAG);
-		mPaint.setColor(Color.GRAY);
+		mPaint.setColor(Color.argb(0xA0, 0xC0, 0xC0, 0xC0));
 		mPaint.setStyle(Paint.Style.FILL);
 
-		LoadingView loadingView = new LoadingView(context);
-		loadingView.setItemLength(4);
-		LayoutParams params = new LayoutParams(LayoutParams.WRAP_CONTENT,
-				LayoutParams.WRAP_CONTENT);
-		params.gravity = Gravity.CENTER;
-//		this.addView(loadingView, params);
 	}
 
 	public void setAnimationProgress(float animationProgress) {
@@ -63,11 +61,10 @@ public class LoadingPage extends FrameLayout {
 	protected void onSizeChanged(int w, int h, int oldw, int oldh) {
 		super.onSizeChanged(w, h, oldw, oldh);
 		if (animator == null) {
-			mCenterX = w / 2;
-			mCenterY = h / 2;
-			MAX = (int) (Math.sqrt(h * h * 2) / 2);
-			animator = ObjectAnimator.ofFloat(this, "animationProgress", 0, MAX);
-			animator.setDuration(800);
+			MAX = (int) (Math.sqrt(h * h * 2));
+			animator = ObjectAnimator
+					.ofFloat(this, "animationProgress", 0, MAX);
+			animator.setDuration(500);
 			animator.addListener(new AnimatorListenerAdapter() {
 				@Override
 				public void onAnimationEnd(Animator animation) {
@@ -76,7 +73,7 @@ public class LoadingPage extends FrameLayout {
 			animator.start();
 		}
 	}
-	
+
 	@Override
 	protected void onDraw(Canvas canvas) {
 		// mPaint.setAlpha((int) ((255 / MAX) * mAnimationProgress));
@@ -84,4 +81,11 @@ public class LoadingPage extends FrameLayout {
 		Log.i("byz", "onDraw = " + mAnimationProgress);
 	}
 
+	public void setCenterX(int x) {
+		mCenterX = x;
+	}
+
+	public void setCenterY(int y) {
+		mCenterY = y;
+	}
 }
